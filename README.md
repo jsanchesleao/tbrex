@@ -9,6 +9,8 @@ This is a library intended to help creating CLI tools.
 ## Example Usage
 
 ```javascript
+  const {Command, Switcher} = require('tbrex');
+  
   class EchoCommand extends Command {
     constructor() {
       super("echo");

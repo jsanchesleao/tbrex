@@ -3,26 +3,24 @@ const Output = require('./output');
 
 class Switcher {
 
-  constructor(desc, config) {
-    if (!config) { config = desc; desc = "" };
-
-    this.config = config;
-    this.desc = desc;
+  constructor({prompt = 'Available commands: ', options}) {
+    this.prompt = prompt;
+    this.options = options;
   }
 
   showAvailableActions() {
-    console.log(this.desc || "Available commands: ");
+    console.log(this.prompt);
     console.log('');
     this.getCommandNames().forEach(command => {
-      console.log(`${command}: ${this.config[command].describe()}`);
+      console.log(`${command}: ${this.options[command].describe()}`);
     });
     console.log('');
   }
 
   getCommandNames() {
     const names = [];
-    for(let i in this.config) {
-      if (this.config.hasOwnProperty(i)) {
+    for(let i in this.options) {
+      if (this.options.hasOwnProperty(i)) {
         names.push(i);
       }
     }
@@ -32,12 +30,12 @@ class Switcher {
   async run(args) {
     try {
       const action = args[0];
-      if (!action || !this.config[action]) {
+      if (!action || !this.options[action]) {
         this.showAvailableActions();
         return 1;
       }
       else {
-        return this.config[action].exec(
+        return this.options[action].exec(
           minimist(args.slice(1)),
           new Output(console.log.bind(console))
         );

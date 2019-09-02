@@ -30,19 +30,25 @@ class MathCommand extends Command {
 class CalcCommand extends Command {
   constructor() {
     super("calc");
+    this.switcher = new Switcher({
+      prompt: 'Available calc operations: ', 
+      options: {
+        add: new MathCommand('add', (a, b) => a + b),
+        mult: new MathCommand('mult', (a, b) => a * b)
+      }
+    });
   }
 
   async exec(args, out) {
-    return (new Switcher('Available calc operations: ', {
-      add: new MathCommand('add', (a, b) => a + b),
-      mult: new MathCommand('mult', (a, b) => a * b)
-    })).run(args._);
+    return this.switcher.run(args._);
   }
 }
 
 const app = new Switcher({
-  echo: new EchoCommand(),
-  calc: new CalcCommand()
-})
+  options: {
+    echo: new EchoCommand(),
+    calc: new CalcCommand()
+  }
+});
 
 app.run(process.argv.slice(2)).then(process.exit);
