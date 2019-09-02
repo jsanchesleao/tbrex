@@ -8,7 +8,7 @@ const inquirer = require('inquirer');
 class Selector extends Switcher{
 
   constructor({prompt, options}) {
-    super(prompt, options);
+    super({prompt, options});
   }
 
   async run(args) {
