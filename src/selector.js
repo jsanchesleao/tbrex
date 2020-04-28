@@ -16,7 +16,7 @@ class Selector extends Switcher{
       const {action} = await inquirer.prompt([{
         type: 'list',
         name: 'action',
-        message: this.desc,
+        message: this.prompt,
         choices: this.listChoices()
       }]);
       await action.exec(
@@ -32,7 +32,7 @@ class Selector extends Switcher{
   listChoices() {
     return this.getCommandNames().map(name => ({
       name: `${name}`,
-      value: this.config[name]
+      value: this.options[name]
     }));
   }
 

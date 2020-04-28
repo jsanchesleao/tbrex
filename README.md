@@ -27,7 +27,9 @@ This is a library intended to help creating CLI tools.
   }
 
   const app = new Switcher({
-    echo: new EchoCommand()
+    options: {
+      echo: new EchoCommand()
+    }
   })
 
   app.run(process.argv.slice(2)).then(process.exit);
